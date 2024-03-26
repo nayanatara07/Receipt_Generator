@@ -5,7 +5,7 @@ def print_receipt():
     tott = float(totText.get())
     top = Toplevel()
     top.geometry("300x300")
-    top.config(bg="white")
+    top.config(bg="lightblue")
     l = Label(top, text='---------RECIEPT----------')
     l.pack()
     l.config(bg="white")
