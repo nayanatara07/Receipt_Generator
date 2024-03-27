@@ -8,10 +8,10 @@ def print_receipt():
     top.config(bg="lightblue")
     l = Label(top, text='---------RECIEPT----------')
     l.pack()
-    l.config(bg="white")
+    l.config(bg="lightblue")
     heading = Label(top, text='\tItem\tPRICE\tQTY\tTOTAL')
     heading.pack()
-    heading.config(bg="white")
+    heading.config(bg="lightblue")
 
     for child in listBox.get_children():
         item = (listBox.item(child, 'values')[0])
@@ -19,11 +19,13 @@ def print_receipt():
         qty = float(listBox.item(child, 'values')[2])
         tot = float(listBox.item(child, 'values')[3])
         item1 = Label(top, text=f'{item}\t{price}\t{qty}\t{tot}')
-        item1.config(bg="white")
+        item1.config(bg="lightblue")
         item1.pack()
 
     tot = Label(top, text=f'Total\t{tott}')
-    tot.config(bg="white")
+    tot.config(bg="lightblueroot.config(bg='lightblue')Label(root, text="Total", bg='lightblue').place(x=600, y=10)total_label = Label(root, text="Total")
+total_label.place(x=600, y=10)
+total_label.config(bg='lightblue')")
     tot.pack()
 
 def show():
@@ -73,7 +75,16 @@ def show():
         tempList.sort(key=lambda e: e[1], reverse=True)
         for i, (item, price, qty, tot) in enumerate(tempList, start=1):
             listBox.insert("", "end", values=(item, price, qty, tot))
+root = Tk()
+root.title("Bill Print Inventory System using Python")
+root.geometry("1000x600")
+root.config(bg='lightblue')  # Change the background color of the root window
 
+# Rest of your code...
+
+total_label = Label(root, text="Total")
+total_label.place(x=600, y=10)
+total_label.config(bg='lightblue')  # Change the background color of the label
     sum1 = 0.0
     for child in listBox.get_children():
         sum1 += float(listBox.item(child, 'values')[3])
