@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
+# Function to print the receipt
 def print_receipt():
     tott = float(totText.get())
     top = Toplevel()
@@ -26,122 +27,69 @@ def print_receipt():
     tot.config(bg="white")
     tot.pack()
 
+# Function to add items to the list
 def show():
     tot = 0
-    if (var1.get()):
-        price = int(e1.get())
-        qty = int(e6.get())
-        tot = int(price * qty)
-        tempList = [['Coca Cola', e1.get(), e6.get(), tot]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-        for i, (item, price, qty, tot) in enumerate(tempList, start=1):
-            listBox.insert("", "end", values=(item, price, qty, tot))
-
-    if (var2.get()):
-        price = int(e2.get())
-        qty = int(e7.get())
-        tot = int(price * qty)
-        tempList = [['Bun', e2.get(), e7.get(), tot]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-        for i, (item, price, qty, tot) in enumerate(tempList, start=1):
-            listBox.insert("", "end", values=(item, price, qty, tot))
-
-    if (var3.get()):
-        price = int(e3.get())
-        qty = int(e8.get())
-        tot = int(price * qty)
-        tempList = [['Chicken Fry', e3.get(), e8.get(), tot]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-        for i, (item, price, qty, tot) in enumerate(tempList, start=1):
-            listBox.insert("", "end", values=(item, price, qty, tot))
-
-    if (var4.get()):
-        price = int(e4.get())
-        qty = int(e9.get())
-        tot = int(price * qty)
-        tempList = [['Roll', e4.get(), e9.get(), tot]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-
-        for i, (item, price, qty, tot) in enumerate(tempList, start=1):
-            listBox.insert("", "end", values=(item, price, qty, tot))
-
-    if (var5.get()):
-        price = int(e5.get())
-        qty = int(e10.get())
-        tot = int(price * qty)
-        tempList = [['Fish Fried Rice', e5.get(), e10.get(), tot]]
-        tempList.sort(key=lambda e: e[1], reverse=True)
-        for i, (item, price, qty, tot) in enumerate(tempList, start=1):
-            listBox.insert("", "end", values=(item, price, qty, tot))
+    for i, var in enumerate(checkbox_vars):
+        if var.get():
+            price = int(entries[i].get())
+            qty = int(entries[i+5].get())
+            tot = int(price * qty)
+            listBox.insert("", "end", values=(labels[i], price, qty, tot))
 
     sum1 = 0.0
     for child in listBox.get_children():
         sum1 += float(listBox.item(child, 'values')[3])
     totText.set(sum1)
 
-
+# Initialize tkinter
 root = Tk()
 root.title("Bill Print Inventory System using Python")
 root.geometry("1000x600")
 root.configure(bg="lightblue")  
 
-Label(root, text="Bill Print Inventory System using Python", font="arial 22 bold", bg="lightblue").place(x=5, y=10)
+# Heading label
+heading_label = Label(root, text="Bill Print Inventory System using Python", font="arial 22 bold", bg="lightblue")
+heading_label.place(x=5, y=10)
 
-var1 = IntVar()
-Checkbutton(root, text="Coca Cola", variable=var1, bg="lightblue").place(x=10, y=50)
+# Labels for items
+labels = ["Coca Cola", "Bun", "Chicken Fry", "Roll", "Fish Fried Rice"]
 
-var2 = IntVar()
-Checkbutton(root, text="Bun", variable=var2, bg="lightblue").place(x=10, y=80)
+# Create Checkbutton instances and store their variables in the list
+checkbox_vars = []
+for i, label in enumerate(labels):
+    var = IntVar()  # Create IntVar instance for each Checkbutton
+    checkbox_vars.append(var)  # Add variable to the list
+    Checkbutton(root, text=label, variable=var, bg="lightblue").place(x=10, y=50 + 30 * i)
 
-var3 = IntVar()
-Checkbutton(root, text="Chicken Fry", variable=var3, bg="lightblue").place(x=10, y=110)
+# Entries for price and quantity
+entries = []
+for i in range(len(labels)):
+    e = Entry(root)
+    e.place(x=140, y=50 + 30 * i)
+    entries.append(e)
 
-var4 = IntVar()
-Checkbutton(root, text="Roll", variable=var4, bg="lightblue").place(x=10, y=140)
+for i in range(len(labels)):
+    e = Entry(root)
+    e.place(x=300, y=50 + 30 * i)
+    entries.append(e)
 
-var5 = IntVar()
-Checkbutton(root, text="Fish Fried Rice", variable=var5, bg="lightblue").place(x=10, y=170)
-
-Label(root, text="Total", bg="lightblue").place(x=600, y=10)
-
-e1 = Entry(root)
-e1.place(x=140, y=50)
-
-e2 = Entry(root)
-e2.place(x=140, y=80)
-
-e3 = Entry(root)
-e3.place(x=140, y=110)
-
-e4 = Entry(root)
-e4.place(x=140, y=140)
-
-e5 = Entry(root)
-e5.place(x=140, y=170)
-
-e6 = Entry(root)
-e6.place(x=300, y=50)
-
-e7 = Entry(root)
-e7.place(x=300, y=80)
-
-e8 = Entry(root)
-e8.place(x=300, y=110)
-
-e9 = Entry(root)
-e9.place(x=300, y=140)
-
-e10 = Entry(root)
-e10.place(x=300, y=170)
-
+# Total label
 totText = StringVar()
 tot = Label(root, text="", font="arial 22 bold", textvariable=totText, bg="lightgray")
-tot.place(x=650, y=10)
+tot.place(x=600, y=10)
 
-Button(root, text="Add", command=show, height=3, width=13).place(x=10, y=220)
-
+# Add and Print buttons
+Button(root, text="Add", command=show, height=3, width=13).place(x=10, y=50 + 30 * len(labels))
 Button(root, text="Print", command=print_receipt, height=3, width=13).place(x=850, y=120)
 
+# Labels for column headings
+Label(root, text="Item", bg="lightblue").place(x=10, y=260)
+Label(root, text="Price", bg="lightblue").place(x=140, y=260)
+Label(root, text="Qty", bg="lightblue").place(x=300, y=260)
+Label(root, text="Total", bg="lightblue").place(x=450, y=260)
+
+# Listbox for displaying items
 cols = ('Item', 'Price', 'Qty', 'Total')
 listBox = ttk.Treeview(root, columns=cols, show='headings')
 
@@ -151,3 +99,7 @@ for col in cols:
     listBox.place(x=10, y=300)
 
 root.mainloop()
+
+
+
+
