@@ -44,12 +44,12 @@ def show():
 
 # Initialize tkinter
 root = Tk()
-root.title("Bill Print Inventory System using Python")
+root.title("Payment Receipt Generator")
 root.geometry("1000x600")
 root.configure(bg="lightblue")  
 
 # Heading label
-heading_label = Label(root, text="Bill Print Inventory System using Python", font="arial 22 bold", bg="lightblue")
+heading_label = Label(root, text="Payment Receipt Generator", font="arial 22 bold", bg="lightblue")
 heading_label.place(x=5, y=10)
 
 # Labels for items
